@@ -1,0 +1,211 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="https://iotexchart.com/wp-content/uploads/2021/11/NEW-LOGO.png">
+
+    <title>IotexChart</title>
+    
+	<!-- Vendors Style-->
+	<link rel="stylesheet" href="{% static 'main/css/vendors_css.css' %}">
+	  
+	<!-- Style-->    
+	<link rel="stylesheet" href="{% static 'main/css/horizontal-menu.css' %}"> 
+	<link rel="stylesheet" href="{% static 'main/css/style.css' %}">
+	<link rel="stylesheet" href="{% static 'main/css/skin_color.css' %}">
+     
+  </head>
+
+<body class="layout-top-nav dark-skin theme-primary">
+	
+<div class="wrapper">
+  <div id="loader"></div>
+	
+  <header class="main-header">
+	  <div class="inside-header">
+		<div class="d-flex align-items-center logo-box justify-content-start">
+			<!-- Logo -->
+			<a href="index.html" class="logo">
+			  <!-- logo-->
+			  <div class="logo-lg">
+				  <span class="light-logo"><img width="50px" src="https://iotexchart.com/wp-content/uploads/2021/11/NEW-LOGO.png" alt="logo"></span>
+				  <span class="dark-logo"><img width="50px" src="https://iotexchart.com/wp-content/uploads/2021/11/NEW-LOGO.png" alt="logo"></span>
+			  </div>
+			</a>	
+		</div>  
+		<!-- Header Navbar -->
+		<nav class="navbar navbar-static-top">
+		  <!-- Sidebar toggle button-->
+		  <div class="app-menu">
+			<ul class="header-megamenu nav">
+				
+				
+				
+			</ul> 
+		  </div>
+
+		  <div class="navbar-custom-menu r-side">
+			<ul class="nav navbar-nav">	
+				<li class="btn-group nav-item d-lg-inline-flex d-none">
+					<a href="#" data-provide="fullscreen" class="waves-effect waves-light nav-link full-screen" title="Full Screen">
+						<i class="icon-Expand-arrows"><span class="path1"></span><span class="path2"></span></i>
+					</a>
+				</li>	  
+				<li class="btn-group d-lg-inline-flex d-none">
+					<div class="app-menu">
+						<div class="search-bx mx-5">
+							<form>
+								<div class="input-group">
+								  <input type="search" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="button-addon2">
+								  <div class="input-group-append">
+									<button class="btn" type="submit" id="button-addon3"><i class="ti-search"></i></button>
+								  </div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</li>
+			  <!-- Notifications -->
+			  
+
+			  
+
+			  <!-- Control Sidebar Toggle Button -->
+			  
+
+			</ul>
+		  </div>
+		</nav>
+
+
+	  </div>
+  </header>
+  
+  <nav class="main-nav" role="navigation">
+
+	  <!-- Mobile menu toggle button (hamburger/x icon) -->
+	  <input id="main-menu-state" type="checkbox" />
+	  <label class="main-menu-btn" for="main-menu-state">
+		<span class="main-menu-btn-icon"></span> Toggle main menu visibility
+	  </label>
+
+	  <!-- Sample menu definition -->
+	  <ul id="main-menu" class="sm sm-blue">
+		<li><a href="#"><i class="icon-Layout-4-blocks"><span class="path1"></span><span class="path2"></span></i>Charts</a>
+					</li>
+		<li><a href="mailbox.html"><i class="icon-Incoming-mail"><span class="path1"></span><span class="path2"></span></i>About</a></li>
+		
+		<li><a href="#"><i type="button" class="icon-Chat-locked" data-toggle="modal" data-target="#modal-center"><span class="path1"></span><span class="path2"></span></i>Banner Advert</a>
+		  
+				  
+		</li>
+
+		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-center">
+					Launch demo modal
+				  </button>
+		<li><a href="#"><i class="icon-Write"><span class="path1"></span><span class="path2"></span></i>Vetted Advert</a>			
+		  
+				
+		<li><a href="#"><i class="icon-Brush"><span class="path1"></span><span class="path2"></span></i>Unvetted Advert</a>
+		  
+			<li><a href="#"><i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>FAQs</a>			  
+			 	  	
+		</li>
+		<li><a href="#"><i class="icon-Brush"><span class="path1"></span><span class="path2"></span></i>Contact</a>
+		   	
+		</li>
+		<li><a href="#"><i class="icon-User"><span class="path1"></span><span class="path2"></span></i>Documentations</a>
+		  
+			
+		
+					  
+		</li>
+		<li><a href="email_index.html"><i class="icon-Mail-notification"><span class="path1"></span><span class="path2"></span></i>More</a></li>
+	  </ul>
+	</nav>
+
+	<nav class="main-nav" role="navigation" style="z-index: 1;">
+{% block content %}
+
+{% endblock %}
+
+
+  <!-- /.content-wrapper -->
+  <footer class="main-footer">
+    <div class="pull-right d-none d-sm-inline-block">
+        <ul class="nav nav-primary nav-dotted nav-dot-separated justify-content-center justify-content-md-end">
+		  <li class="nav-item">
+			<a class="nav-link" href="javascript:void(0)">FAQ</a>
+		  </li>
+		  <li class="nav-item">
+			<a class="nav-link" href="#">Purchase Now</a>
+		  </li>
+		</ul>
+    </div>
+	  &copy; 2020 <a href="https://www.multipurposethemes.com/">Multipurpose Themes</a>. All Rights Reserved.
+  </footer>
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar">
+	  
+	
+  </aside>
+  <!-- /.control-sidebar -->
+  
+  <!-- Add the sidebar's background. This div must be placed immediately after the control sidebar -->
+  <div class="control-sidebar-bg"></div>
+  
+</div>
+<!-- ./wrapper -->
+	
+	<!-- ./side demo panel -->
+	
+	<!-- Sidebar -->
+	<!-- Modal -->
+  <div class="modal center-modal fade" id="modal-center" tabindex="-1">
+	  <div class="modal-dialog">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<h5 class="modal-title">Modal title</h5>
+			<button type="button" class="close" data-dismiss="modal">
+			  <span aria-hidden="true">&times;</span>
+			</button>
+		  </div>
+		  <div class="modal-body">
+			<p>Your content comes here</p>
+		  </div>
+		  <div class="modal-footer modal-footer-uniform">
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			<button type="button" class="btn btn-primary float-right">Save changes</button>
+		  </div>
+		</div>
+	  </div>
+	</div>
+  <!-- /.modal -->	
+	
+
+		
+	
+	<!-- Page Content overlay -->
+	
+	
+	<!-- Vendor JS -->
+	<script src="{% static 'main/js/vendors.min.js' %}"></script>
+	<script src="{% static 'main/js/pages/chat-popup.js' %}"></script>
+    <script src="{% static 'assets/icons/feather-icons/feather.min.js' %}"></script>	
+
+	<script src="{% static 'assets/vendor_components/apexcharts-bundle/dist/apexcharts.js' %}"></script>
+	
+	<!-- EduAdmin App -->
+	<script src="{% static 'main/js/jquery.smartmenus.js' %}"></script>
+	<script src="{% static 'main/js/menus.js' %}"></script>
+	<script src="{% static 'main/js/template.js' %}"></script>
+	<script src="{% static 'main/js/pages/dashboard4.js' %}"></script>
+	
+</body>
+</html>
