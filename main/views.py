@@ -12,34 +12,32 @@ from datetime import datetime
 import requests
 import time
 from datetime import datetime, timedelta
+from django.utils import timezone
+
+from .models import *
 
 
 
-def GetData():
-	apiUrl = "https://api.pro.coinbase.com"
-	sym = "IOTX-USD"
-	barSize = "60"
+def UpdateZoomSwap(new_data):
 
-	timeEnd = datetime.now()
-	delta = timedelta(seconds=int(barSize))
+	for item in new_data:
+		new_crypto_data = ZoomSwap.objects.create(price=item[1], date=item[0])
+		new_crypto_data.save()
 
-	timeStart = timeEnd - (1*delta)
 
-	timeStart = timeStart.isoformat()
-	timeEnd = timeEnd.isoformat()
+def UpdateVitality(new_data):
 
-	parameters = {
-		"start": timeStart,
-		"end": timeEnd,
-		"granularity": "60",
-	}
-	headers = {"content-type": "application/json"}
+	for item in new_data:
+		new_crypto_data = Vitality.objects.create(price=item[1], date=item[0])
+		new_crypto_data.save()
 
-	data = requests.get(f"{apiUrl}/products/{sym}/candles",
-			params=parameters,
-			headers=headers).json()
 
-	return data
+def UpdateGameFantasyToken(new_data):
+
+	for item in new_data:
+		new_crypto_data = GameFantasyToken.objects.create(price=item[1], date=item[0])
+		new_crypto_data.save()
+
 
 
 
@@ -50,115 +48,18 @@ def IndexView(request):
 
 	else:
 
-		#1day chart
-		response = requests.get("https://api.coingecko.com/api/v3/coins/iotex/ohlc?vs_currency=usd&days=1").json()
-		#data = GetData()
-		data1 = []
-
-		for item in response:
-			new_list = []
-			new_list.append(item[0])
-			new_list.append(item[1])
-			new_list.append(item[2])
-			new_list.append(item[3])
-			new_list.append(item[4])
-
-			data1.append(new_list)
-
-
-		#1day chart
-		response = requests.get("https://api.coingecko.com/api/v3/coins/iotex/ohlc?vs_currency=usd&days=7").json()
-		#data = GetData()
-		data7 = []
-
-		for item in response:
-			new_list = []
-			new_list.append(item[0])
-			new_list.append(item[1])
-			new_list.append(item[2])
-			new_list.append(item[3])
-			new_list.append(item[4])
-
-			data7.append(new_list)
-
-		#1day chart
-		response = requests.get("https://api.coingecko.com/api/v3/coins/iotex/ohlc?vs_currency=usd&days=14").json()
-		#data = GetData()
-		data14 = []
-
-		for item in response:
-			new_list = []
-			new_list.append(item[0])
-			new_list.append(item[1])
-			new_list.append(item[2])
-			new_list.append(item[3])
-			new_list.append(item[4])
-
-			data14.append(new_list)
-
-		#1day chart
-		response = requests.get("https://api.coingecko.com/api/v3/coins/iotex/ohlc?vs_currency=usd&days=30").json()
-		#data = GetData()
-		data30 = []
-
-		for item in response:
-			new_list = []
-			new_list.append(item[0])
-			new_list.append(item[1])
-			new_list.append(item[2])
-			new_list.append(item[3])
-			new_list.append(item[4])
-
-			data30.append(new_list)
-
-		#1day chart
-		response = requests.get("https://api.coingecko.com/api/v3/coins/iotex/ohlc?vs_currency=usd&days=90").json()
-		#data = GetData()
-		data90 = []
-
-		for item in response:
-			new_list = []
-			new_list.append(item[0])
-			new_list.append(item[1])
-			new_list.append(item[2])
-			new_list.append(item[3])
-			new_list.append(item[4])
-
-			data90.append(new_list)
-
-
-		#1day chart
-		response = requests.get("https://api.coingecko.com/api/v3/coins/iotex/ohlc?vs_currency=usd&days=180").json()
-		#data = GetData()
-		data180 = []
-
-		for item in response:
-			new_list = []
-			new_list.append(item[0])
-			new_list.append(item[1])
-			new_list.append(item[2])
-			new_list.append(item[3])
-			new_list.append(item[4])
-
-			data180.append(new_list)
-
-		#1day chart
-		response = requests.get("https://api.coingecko.com/api/v3/coins/iotex/ohlc?vs_currency=usd&days=365").json()
-		#data = GetData()
-		data365 = []
-
-		for item in response:
-			new_list = []
-			new_list.append(item[0])
-			new_list.append(item[1])
-			new_list.append(item[2])
-			new_list.append(item[3])
-			new_list.append(item[4])
-
-			data365.append(new_list)
-
-		context = {"data1": data1, "data7": data7, "data14": data14, "data30": data30, "data90": data90, "data180": data180, "data365": data365}
+		context = {}
 		return render(request, "main/index.html", context )
+
+
+
+def RealTime(request):
+	rt_data = []
+
+	pass
+
+
+
 
 
 def BannerView(request):
@@ -176,3 +77,337 @@ def UnvettedView(request):
 	else:
 		context = {}
 		return render(request, "main/unvetted.html", context )
+
+
+
+
+
+
+
+#coin views
+def ZoomSwapView(request):
+	if request.method == "POST":
+		pass
+
+
+	else:
+
+
+		crypto_data = ZoomSwap.objects.order_by("-date")
+
+		if len(crypto_data) > 0:
+		
+			most_recent = crypto_data[0]
+
+			most_recent_date = most_recent.date
+			current_date = (timezone.now()).date()
+			current_date = new_date = datetime.strptime(str(current_date), "%Y-%m-%d").strftime("%m/%d/%Y")
+
+			sum_most_recent_date = 0
+			most_recent_date = most_recent_date.split("/")
+			for item in most_recent_date:
+				sum_most_recent_date += int(item)
+
+			sum_current_date = 0
+			current_date = current_date.split("/")
+			for item in current_date:
+				sum_current_date += int(item)
+
+
+			#print(most_recent.date)
+
+			#print("sum_current_date: %s ============= sum_most_recent_date: %s" % (sum_current_date, sum_most_recent_date))
+
+			if sum_most_recent_date == sum_current_date:
+				pass
+
+			elif sum_most_recent_date < sum_current_date:
+				all_data30 = []
+
+				current_date = (datetime.now()).date()
+
+				for item in range(sum_current_date-sum_most_recent_date):
+					new_list = []
+
+					new_date = (current_date-timedelta(days=item))
+					new_date = datetime.strptime(str(new_date), "%Y-%m-%d").strftime("%d-%m-%Y")
+
+					response = requests.get("https://api.coingecko.com/api/v3/coins/zoomswap/history?date=%s&localization=false" % (new_date)).json()
+					price = response["market_data"]["current_price"]["usd"]
+
+					new_date = datetime.strptime(str(new_date), "%d-%m-%Y").strftime("%m/%d/%Y")
+					new_list.append(new_date)
+					new_list.append(price)
+
+					all_data30.append(new_list)
+
+					
+
+				UpdateZoomSwap(all_data30)
+
+			else:
+				pass
+
+		else:
+			
+			current_date = (timezone.now()).date()
+			current_date = new_date = datetime.strptime(str(current_date), "%Y-%m-%d").strftime("%m/%d/%Y")
+
+			sum_current_date = 0
+			current_date = current_date.split("/")
+			for item in current_date:
+				sum_current_date += int(item)
+
+			sum_most_recent_date = sum_current_date - 30
+
+			if sum_most_recent_date == sum_current_date or sum_most_recent_date < sum_current_date:
+				all_data30 = []
+
+				current_date = (datetime.now()).date()
+
+				for item in range(sum_current_date-sum_most_recent_date):
+					new_list = []
+
+					new_date = (current_date-timedelta(days=item))
+					new_date = datetime.strptime(str(new_date), "%Y-%m-%d").strftime("%d-%m-%Y")
+
+					response = requests.get("https://api.coingecko.com/api/v3/coins/zoomswap/history?date=%s&localization=false" % (new_date)).json()
+					price = response["market_data"]["current_price"]["usd"]
+
+					new_date = datetime.strptime(str(new_date), "%d-%m-%Y").strftime("%m/%d/%Y")
+					new_list.append(new_date)
+					new_list.append(price)
+
+					all_data30.append(new_list)
+
+					
+
+				UpdateZoomSwap(all_data30)
+
+
+		crypto_data = ZoomSwap.objects.order_by("date")
+		
+
+		coin_name = "Zoom Swap"
+		context = {"all_data30": crypto_data, "coin_name": coin_name}
+		return render(request, "main/live_chart.html", context )
+
+
+
+
+
+def VitalityView(request):
+	if request.method == "POST":
+		pass
+
+
+	else:
+
+
+		crypto_data = Vitality.objects.order_by("-date")
+
+		if len(crypto_data) > 0:
+		
+			most_recent = crypto_data[0]
+
+			most_recent_date = most_recent.date
+			current_date = (timezone.now()).date()
+			current_date = new_date = datetime.strptime(str(current_date), "%Y-%m-%d").strftime("%m/%d/%Y")
+
+			sum_most_recent_date = 0
+			most_recent_date = most_recent_date.split("/")
+			for item in most_recent_date:
+				sum_most_recent_date += int(item)
+
+			sum_current_date = 0
+			current_date = current_date.split("/")
+			for item in current_date:
+				sum_current_date += int(item)
+
+
+			#print(most_recent.date)
+
+			#print("sum_current_date: %s ============= sum_most_recent_date: %s" % (sum_current_date, sum_most_recent_date))
+
+			if sum_most_recent_date == sum_current_date:
+				pass
+
+			elif sum_most_recent_date < sum_current_date:
+				all_data30 = []
+
+				current_date = (datetime.now()).date()
+
+				for item in range(sum_current_date-sum_most_recent_date):
+					new_list = []
+
+					new_date = (current_date-timedelta(days=item))
+					new_date = datetime.strptime(str(new_date), "%Y-%m-%d").strftime("%d-%m-%Y")
+
+					response = requests.get("https://api.coingecko.com/api/v3/coins/vitality/history?date=%s&localization=false" % (new_date)).json()
+					price = response["market_data"]["current_price"]["usd"]
+
+					new_date = datetime.strptime(str(new_date), "%d-%m-%Y").strftime("%m/%d/%Y")
+					new_list.append(new_date)
+					new_list.append(price)
+
+					all_data30.append(new_list)
+
+					
+
+				UpdateVitality(all_data30)
+
+			else:
+				pass
+
+		else:
+			
+			current_date = (timezone.now()).date()
+			current_date = new_date = datetime.strptime(str(current_date), "%Y-%m-%d").strftime("%m/%d/%Y")
+
+			sum_current_date = 0
+			current_date = current_date.split("/")
+			for item in current_date:
+				sum_current_date += int(item)
+
+			sum_most_recent_date = sum_current_date - 30
+
+			if sum_most_recent_date == sum_current_date or sum_most_recent_date < sum_current_date:
+				all_data30 = []
+
+				current_date = (datetime.now()).date()
+
+				for item in range(sum_current_date-sum_most_recent_date):
+					new_list = []
+
+					new_date = (current_date-timedelta(days=item))
+					new_date = datetime.strptime(str(new_date), "%Y-%m-%d").strftime("%d-%m-%Y")
+
+					response = requests.get("https://api.coingecko.com/api/v3/coins/vitality/history?date=%s&localization=false" % (new_date)).json()
+					price = response["market_data"]["current_price"]["usd"]
+
+					new_date = datetime.strptime(str(new_date), "%d-%m-%Y").strftime("%m/%d/%Y")
+					new_list.append(new_date)
+					new_list.append(price)
+
+					all_data30.append(new_list)
+
+					
+
+				UpdateVitality(all_data30)
+
+
+		crypto_data = Vitality.objects.order_by("date")
+		
+		coin_name = "Vitality"
+		context = {"all_data30": crypto_data, "coin_name": coin_name}
+		return render(request, "main/live_chart.html", context )
+
+
+
+
+def GameFantasyTokenView(request):
+	if request.method == "POST":
+		pass
+
+
+	else:
+
+
+		crypto_data = GameFantasyToken.objects.order_by("-date")
+
+		if len(crypto_data) > 0:
+		
+			most_recent = crypto_data[0]
+
+			most_recent_date = most_recent.date
+			current_date = (timezone.now()).date()
+			current_date = new_date = datetime.strptime(str(current_date), "%Y-%m-%d").strftime("%m/%d/%Y")
+
+			sum_most_recent_date = 0
+			most_recent_date = most_recent_date.split("/")
+			for item in most_recent_date:
+				sum_most_recent_date += int(item)
+
+			sum_current_date = 0
+			current_date = current_date.split("/")
+			for item in current_date:
+				sum_current_date += int(item)
+
+
+			#print(most_recent.date)
+
+			#print("sum_current_date: %s ============= sum_most_recent_date: %s" % (sum_current_date, sum_most_recent_date))
+
+			if sum_most_recent_date == sum_current_date:
+				pass
+
+			elif sum_most_recent_date < sum_current_date:
+				all_data30 = []
+
+				current_date = (datetime.now()).date()
+
+				for item in range(sum_current_date-sum_most_recent_date):
+					new_list = []
+
+					new_date = (current_date-timedelta(days=item))
+					new_date = datetime.strptime(str(new_date), "%Y-%m-%d").strftime("%d-%m-%Y")
+
+					response = requests.get("https://api.coingecko.com/api/v3/coins/game-fantasy-token/history?date=%s&localization=false" % (new_date)).json()
+					price = response["market_data"]["current_price"]["usd"]
+
+					new_date = datetime.strptime(str(new_date), "%d-%m-%Y").strftime("%m/%d/%Y")
+					new_list.append(new_date)
+					new_list.append(price)
+
+					all_data30.append(new_list)
+
+					
+
+				UpdateGameFantasyToken(all_data30)
+
+			else:
+				pass
+
+		else:
+			
+			current_date = (timezone.now()).date()
+			current_date = new_date = datetime.strptime(str(current_date), "%Y-%m-%d").strftime("%m/%d/%Y")
+
+			sum_current_date = 0
+			current_date = current_date.split("/")
+			for item in current_date:
+				sum_current_date += int(item)
+
+			sum_most_recent_date = sum_current_date - 30
+
+			if sum_most_recent_date == sum_current_date or sum_most_recent_date < sum_current_date:
+				all_data30 = []
+
+				current_date = (datetime.now()).date()
+
+				for item in range(sum_current_date-sum_most_recent_date):
+					new_list = []
+
+					new_date = (current_date-timedelta(days=item))
+					new_date = datetime.strptime(str(new_date), "%Y-%m-%d").strftime("%d-%m-%Y")
+
+					response = requests.get("https://api.coingecko.com/api/v3/coins/game-fantasy-token/history?date=%s&localization=false" % (new_date)).json()
+					price = response["market_data"]["current_price"]["usd"]
+
+					new_date = datetime.strptime(str(new_date), "%d-%m-%Y").strftime("%m/%d/%Y")
+					new_list.append(new_date)
+					new_list.append(price)
+
+					all_data30.append(new_list)
+
+					
+
+				UpdateGameFantasyToken(all_data30)
+
+
+		crypto_data = GameFantasyToken.objects.order_by("date")
+		
+
+		coin_name = "Game Fantasy Token"
+		context = {"all_data30": crypto_data, "coin_name": coin_name}
+		return render(request, "main/live_chart.html", context )

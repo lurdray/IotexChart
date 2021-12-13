@@ -150,210 +150,139 @@
 
 			
 
-						<div class="box mb-15 pull-up">
-							<div class="box-body">
-								<div class="d-flex align-items-center justify-content-between">
-									<div class="d-flex align-items-center">
-										<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Iotex chart <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/2777.png"></title>
-
-    <link href="../../assets/styles.css" rel="stylesheet" />
-
-    <style>
-      
-      #chart {
-       width: 580px;
-      max-width: 650px;
-      margin: 35px auto;
-      background-color: #0c0c0c;
-    }
-
-    @media screen and (max-width: 480px) {
-  #chart {
-    background-color: #0c0c0c;
-    width: 350px;
-  }
-}
-      
-    </style>
-
-    <script>
-      window.Promise ||
-        document.write(
-          '<script src="https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.min.js"><\/script>'
-        )
-      window.Promise ||
-        document.write(
-          '<script src="https://cdn.jsdelivr.net/npm/eligrey-classlist-js-polyfill@1.2.20171210/classList.min.js"><\/script>'
-        )
-      window.Promise ||
-        document.write(
-          '<script src="https://cdn.jsdelivr.net/npm/findindex_polyfill_mdn"><\/script>'
-        )
-    </script>
-
-    
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-    
-
-    <script>
-      // Replace Math.random() with a pseudo-random number generator to get reproducible results in e2e tests
-      // Based on https://gist.github.com/blixt/f17b47c62508be59987b
-      var _seed = 42;
-      Math.random = function() {
-        _seed = _seed * 16807 % 2147483647;
-        return (_seed - 1) / 2147483646;
-      };
-    </script>
-
-    <script src="../../assets/ohlc.js"></script>
-  </head>
-
-  <body>
-     <div id="chart" ></div>
-
-    <script>
-
-        var options = {
-          series: [{
-          data: [
-
-          
-          {% for item in data7 %}
-
-          	{
-              x: new Date({{ item.0 }}),
-              y: [{{ item.1 }}, {{ item.2 }}, {{ item.3 }}, {{ item.4 }}]
-            },
-						
-					{% endfor %}
-
-          	
+			<div class="box mb-15 pull-up">
+				<div class="box-body">
+					<div class="d-flex align-items-center justify-content-between">
+						<div class="d-flex align-items-center">
 
 
 
-           ]
-        }],
-          chart: {
-          type: 'candlestick',
-          height: 350
-        },
-        title: {
-          text: 'IotexChart',
-          align: 'left'
-        },
-        xaxis: {
-          type: 'datetime'
-        },
-        yaxis: {
-          tooltip: {
-            enabled: true
-          }
-        }
-        };
 
-        var chart = new ApexCharts(document.querySelector("#chart"), options);
-        chart.render();
-      
-      
-    </script>
+							<a href="{% url 'main:zoom_swap' %}">ZoomSwap</a>
+							<a href="{% url 'main:vitality' %}">Vitality</a>
+							<a href="{% url 'main:game_fantasy_token' %}">Game Fantasy</a>
 
-    
-  </body>
-</html>
 
-									
-								</div>
-							</div>
+
+
+
+
+
+
+
+
+
+			  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+								
 						</div>
-						
-												
+					</div>
+				</div>						
+			</div>
+
+
+
+			</div>
+		</div>
+			<div class="col-xl-3 col-12">
+				<div class="box no-shadow mb-0 bg-transparent">
+					<div class="box-header no-border px-0">
+						<h4 class="box-title">Recent Adverts</h4>							
+						<div class="box-controls pull-right d-md-flex d-none">
+						  <a href="#">View All</a>
 						</div>
 					</div>
 				</div>
-				<div class="col-xl-3 col-12">
-					<div class="box no-shadow mb-0 bg-transparent">
-						<div class="box-header no-border px-0">
-							<h4 class="box-title">Recent Adverts</h4>							
-							<div class="box-controls pull-right d-md-flex d-none">
-							  <a href="#">View All</a>
-							</div>
-						</div>
-					</div>
-					<div>
-						<div class="box bt-5 border-danger rounded pull-up">
-							<div class="box-body">	
-								<div class="flex-grow-1">	
-									<div class="d-flex align-items-center pr-2 justify-content-between">							
-										<img src="https://cdnwp.mobidea.com/academy/wp-content/uploads/2018/06/Crypto-Ad-Networks-The-Definitive-Review-1.jpg">
-										<div class="dropdown">
-											
-											</div>
-										</div>						
-									</div>
-									<p class="font-size-16">
-										learn more...
-									</p>
-								</div>							
+				<div>
+					<div class="box bt-5 border-danger rounded pull-up">
+						<div class="box-body">	
+							<div class="flex-grow-1">	
+								<div class="d-flex align-items-center pr-2 justify-content-between">							
+									<img src="https://cdnwp.mobidea.com/academy/wp-content/uploads/2018/06/Crypto-Ad-Networks-The-Definitive-Review-1.jpg">
+									<div class="dropdown">
 										
-						</div>
-						<div class="box bt-5 border-primary rounded pull-up">
-							<div class="box-body">	
-								<div class="flex-grow-1">	
-									<div class="d-flex align-items-center pr-2 justify-content-between">							
-										<img src="https://i.guim.co.uk/img/media/a9c072bfd48c0f20b247726e7ef38d4b9695fce8/0_0_6231_3741/master/6231.jpg?width=1200&quality=85&auto=format&fit=max&s=d2ff8e8d85b4ebe28463496f246d67ee">
-										<div class="dropdown">
-											
-											
-										</div>						
-									</div>
-									<p class="font-size-16">
-										Learn Morea...
-									</p>
-								</div>							
-								<div class="d-flex align-items-center justify-content-between mt-10">
-									
-									
+										</div>
+									</div>						
 								</div>
-							</div>					
-						</div>
+								<p class="font-size-16">
+									learn more...
+								</p>
+							</div>							
+									
+					</div>
+					<div class="box bt-5 border-primary rounded pull-up">
+						<div class="box-body">	
+							<div class="flex-grow-1">	
+								<div class="d-flex align-items-center pr-2 justify-content-between">							
+									<img src="https://i.guim.co.uk/img/media/a9c072bfd48c0f20b247726e7ef38d4b9695fce8/0_0_6231_3741/master/6231.jpg?width=1200&quality=85&auto=format&fit=max&s=d2ff8e8d85b4ebe28463496f246d67ee">
+									<div class="dropdown">
+										
+										
+									</div>						
+								</div>
+								<p class="font-size-16">
+									Learn Morea...
+								</p>
+							</div>							
+							<div class="d-flex align-items-center justify-content-between mt-10">
+								
+								
+							</div>
+						</div>					
 					</div>
 				</div>
-				
-				<div class="col-xl-12 col-12">
-					<div class="box">
-						<div class="box-body">
-							<p class="text-fade">Hours spent</p>
-							<h3 class="mt-0 mb-20">21 h 30 min <small class="text-danger"><i class="fa fa-arrow-down ml-25 mr-5"></i> 15%</small></h3>
-							<!-- TradingView Widget BEGIN -->
+			</div>
+			
+			<div class="col-xl-12 col-12">
+				<div class="box">
+					<div class="box-body">
+						<p class="text-fade">Hours spent</p>
+						<h3 class="mt-0 mb-20">21 h 30 min <small class="text-danger"><i class="fa fa-arrow-down ml-25 mr-5"></i> 15%</small></h3>
+						<!-- TradingView Widget BEGIN -->
 <div class="tradingview-widget-container">
-  <div class="tradingview-widget-container__widget"></div>
-  <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/markets/cryptocurrencies/prices-all/" rel="noopener" target="_blank"><span class="blue-text">Cryptocurrency Markets</span></a> by TradingView</div>
-  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-screener.js" async>
-  {
-  "width": "100%",
-  "height": "100%",
-  "defaultColumn": "overview",
-  "screener_type": "crypto_mkt",
-  "displayCurrency": "USD",
-  "colorTheme": "dark",
-  "locale": "en",
-  "isTransparent": true
+<div class="tradingview-widget-container__widget"></div>
+<div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/markets/cryptocurrencies/prices-all/" rel="noopener" target="_blank"><span class="blue-text">Cryptocurrency Markets</span></a> by TradingView</div>
+<script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-screener.js" async>
+{
+"width": "100%",
+"height": "100%",
+"defaultColumn": "overview",
+"screener_type": "crypto_mkt",
+"displayCurrency": "USD",
+"colorTheme": "dark",
+"locale": "en",
+"isTransparent": true
 }
-  </script>
+</script>
 </div>
 <!-- TradingView Widget END -->
-						</div>
 					</div>
-				</div>				
-			</div>	
-		</section>
-		<!-- /.content -->
-	  </div>
+				</div>
+			</div>				
+		</div>	
+	</section>
+	<!-- /.content -->
   </div>
+</div>
 {% endblock %}
