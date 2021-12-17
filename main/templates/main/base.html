@@ -5,11 +5,36 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="https://iotexchart.com/wp-content/uploads/2021/11/NEW-LOGO.png">
 
-    <title>IotexChart</title>
+    <link rel="alternate icon" href="https://iotexchart.com/wp-content/uploads/2021/11/NEW-LOGO.png">
+    <link rel="icon" type="image/svg+xml" href="https://iotexchart.com/wp-content/uploads/2021/11/NEW-LOGO.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="keywords" content="iotex | XRC20 | XRC721 | Chart | Token Information | Market Cap | Ranking | Total Supply | All time high | All time low | ATH | ATL  "/>
+
+    <meta name="msapplication-TileColor" content="#da532c"/>
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta property="og:title" content="IotexChart"/>
+    <meta name="twitter:title" content="IotexChart"/>
+
+    <meta name="twitter:description" content="The genesis chart platform for the IOTEX blockchain.
+    "/>
+    <meta property="og:description" content="The genesis chart platform for the IOTEX blockchain."/>
+
+    
+    <meta name="description" content="The genesis chart platform for the IOTEX blockchain" content="IE=edge"/>
+
+    <title>IotexChart - The genesis chart platform for the IOTEX blockchain</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://iotexchart.com/wp-content/uploads/2021/11/NEW-LOGO.png"/>
+    
+    <link rel="alternate icon" href="https://iotexchart.com/wp-content/uploads/2021/11/NEW-LOGO.png">
+    <link rel="shortcut icon" href="https://iotexchart.com/wp-content/uploads/2021/11/NEW-LOGO.png" type="image/x-icon">
+    <link rel="icon" href="https://iotexchart.com/wp-content/uploads/2021/11/NEW-LOGO.png" type="image/x-icon">
+    <meta name="msapplication-TileColor" content="#da532c"/>
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta property="og:title" content="IotexChart"/>
+    <meta name="twitter:title" content="IotexChart"/>
+
     
 	<!-- Vendors Style-->
 	<link rel="stylesheet" href="{% static 'main/css/vendors_css.css' %}">
@@ -30,7 +55,7 @@
 	  <div class="inside-header">
 		<div class="d-flex align-items-center logo-box justify-content-start">
 			<!-- Logo -->
-			<a href="index.html" class="logo">
+			<a href="/" class="logo">
 			  <!-- logo-->
 			  <div class="logo-lg">
 				  <span class="light-logo"><img width="50px" src="https://iotexchart.com/wp-content/uploads/2021/11/NEW-LOGO.png" alt="logo"></span>
@@ -59,9 +84,10 @@
 				<li class="btn-group d-lg-inline-flex d-none">
 					<div class="app-menu">
 						<div class="search-bx mx-5">
-							<form>
+							<form method="post" action="/">
+								{% csrf_token %}
 								<div class="input-group">
-								  <input type="search" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="button-addon2">
+								  <input name="query" type="search" class="form-control" placeholder="Search by name/address" aria-label="Search" aria-describedby="button-addon2">
 								  <div class="input-group-append">
 									<button class="btn" type="submit" id="button-addon3"><i class="ti-search"></i></button>
 								  </div>
@@ -71,8 +97,34 @@
 					</div>
 				</li>
 			  <!-- Notifications -->
-			  
 
+			  <!-- User Account-->
+			  {% if user.is_authenticated %}
+
+			  <li class="dropdown user user-menu">
+				<a href="#" class="waves-effect waves-light dropdown-toggle" data-toggle="dropdown" title="User">
+					<i class="icon-User"><span class="path1"></span><span class="path2"></span></i>
+				</a>
+				
+				<ul class="dropdown-menu animated flipInX">
+				  <li class="user-body" style="z-index:999999">
+				  						 <a class="dropdown-item" href="/all-banner/"><i class="fa fa-bullhorn text-muted mr-2"></i> Submitted Ads</a>
+					 <a class="dropdown-item" href="/all-vetted/"><i class="fa fa-btc text-muted mr-2"></i> Submitted Tokens</a>
+					 <a class="dropdown-item" href="#"><i class="ti-settings text-muted mr-2"></i> Settings</a>
+					 <div class="dropdown-divider"></div>
+					 <a class="dropdown-item" href="#"><i class="ti-lock text-muted mr-2"></i> Logout</a>
+					 
+				  </li>
+				</ul>
+				
+			  </li>
+			  {% endif %}
+			  
+			  <li class="btn-group nav-item d-none d-xl-inline-block">
+					<a href="/signin/" class="waves-effect waves-light nav-link svg-bt-icon" title="admin login">
+						<i class="fa fa-lock"><span class="path1"></span><span class="path2"></span></i>
+					</a>
+				</li>
 			  
 
 			  <!-- Control Sidebar Toggle Button -->
@@ -96,40 +148,31 @@
 
 	  <!-- Sample menu definition -->
 	  <ul id="main-menu" class="sm sm-blue">
-		<li><a href="#"><i class="icon-Layout-4-blocks"><span class="path1"></span><span class="path2"></span></i>Charts</a>
-					</li>
-		<li><a href="mailbox.html"><i class="icon-Incoming-mail"><span class="path1"></span><span class="path2"></span></i>About</a></li>
+		<li><a href="/"><i class="fa fa-home"><span class="path1"></span><span class="path2"></span></i>Home</a></li>
+		<li><a href="https://iotexchart.com/" target="_blank"><i class="icon-Incoming-mail"><span class="path1"></span><span class="path2"></span></i>About</a></li>
 		
-		<li><a href="#"><i type="button" class="icon-Chat-locked" data-toggle="modal" data-target="#modal-center"><span class="path1"></span><span class="path2"></span></i>Banner Advert</a>
-		  
-				  
-		</li>
+		<li><a href="/banner/"><i type="button" class="fa fa-bullhorn"><span class="path1"></span><span class="path2"></span></i>Banner Advert</a></li>
 
-		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-center">
-					Launch demo modal
-				  </button>
-		<li><a href="#"><i class="icon-Write"><span class="path1"></span><span class="path2"></span></i>Vetted Advert</a>			
+
+		<li><a href="/unvetted/"><i class="fa fa-btc"><span class="path1"></span><span class="path2"></span></i>List Token</a>			
 		  
-				
-		<li><a href="#"><i class="icon-Brush"><span class="path1"></span><span class="path2"></span></i>Unvetted Advert</a>
-		  
-			<li><a href="#"><i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>FAQs</a>			  
+		<li><a href="#"><i class="fa fa-question-circle"><span class="path1"></span><span class="path2"></span></i>Frequently Asked Questions</a>			  
 			 	  	
 		</li>
-		<li><a href="#"><i class="icon-Brush"><span class="path1"></span><span class="path2"></span></i>Contact</a>
+		<li><a href="#"><i class="icon-Incoming-mail"><span class="path1"></span><span class="path2"></span></i>Contact Us</a>
 		   	
 		</li>
-		<li><a href="#"><i class="icon-User"><span class="path1"></span><span class="path2"></span></i>Documentations</a>
+		<li><a href="#"><i class="fa fa-book"><span class="path1"></span><span class="path2"></span></i>Documentations</a>
 		  
 			
 		
 					  
 		</li>
-		<li><a href="email_index.html"><i class="icon-Mail-notification"><span class="path1"></span><span class="path2"></span></i>More</a></li>
+		<li><a href="#"><i class="icon-Mail-notification"><span class="path1"></span><span class="path2"></span></i>More</a></li>
 	  </ul>
 	</nav>
 
-	<nav class="main-nav" role="navigation" style="z-index: 1;">
+	
 {% block content %}
 
 {% endblock %}
@@ -143,11 +186,11 @@
 			<a class="nav-link" href="javascript:void(0)">FAQ</a>
 		  </li>
 		  <li class="nav-item">
-			<a class="nav-link" href="#">Purchase Now</a>
+			<a class="nav-link" href="/">Home</a>
 		  </li>
 		</ul>
     </div>
-	  &copy; 2020 <a href="https://www.multipurposethemes.com/">Multipurpose Themes</a>. All Rights Reserved.
+	  &copy; 2021 <a href="#">Oppenhiem.io</a>. All Rights Reserved.
   </footer>
 
   <!-- Control Sidebar -->
@@ -206,6 +249,14 @@
 	<script src="{% static 'main/js/menus.js' %}"></script>
 	<script src="{% static 'main/js/template.js' %}"></script>
 	<script src="{% static 'main/js/pages/dashboard4.js' %}"></script>
+
+
+	<script src="{% static 'assets/vendor_plugins/bootstrap-slider/bootstrap-slider.js' %}"></script>
+	<script src="{% static 'assets/vendor_components/OwlCarousel2/dist/owl.carousel.js' %}"></script>
+	<script src="{% static 'assets/vendor_components/flexslider/jquery.flexslider.js' %}"></script>
+
+	
+	<script src="{% static 'main/js/pages/slider.js' %}"></script>
 	
 </body>
 </html>

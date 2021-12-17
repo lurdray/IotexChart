@@ -1,0 +1,144 @@
+{% extends "main/base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+
+ <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+	  <div class="container-full">
+		<!-- Main content -->
+		<section class="content">
+			
+			
+			<div class="row container-fluid">
+				<h1>SORRY, NO RESULTS FOUND!</h1>
+				
+			</div>
+			<div class="row container-fluid">
+				<br />
+				<br />
+				<a class="btn btn-primary btn-lg" href="{% url 'main:index' %}">
+				  Go Back
+				</a>
+				
+			</div>
+
+
+			<br /><br />
+			<div class="row container-fluid">
+				<h4>But you may like:</h4>
+			</div>
+			
+			<div class="box">
+				
+				<!-- /.box-header -->
+				<div class="box-body no-padding">
+					<div class="table-responsive">
+					  <table class="table table-hover">
+						<tr>
+						  <th>Token Name</th>
+						  <th>Total Supply</th>
+						  <th>Last Price</th>
+						  <th>Market Cap</th>
+						  <th>Rank</th>
+						  
+						</tr>
+						<tr>
+							<tr>
+								{% for rs in iotex%}
+						  <td><img width="20px" height="20px" src="{{ rs.image }}"><a href="{% url 'main:iotex' %}"> {{ rs.name }} ({{ rs.symbol}})</a></td>
+						  <td>{{ rs.total_supply }}</td>
+						  <td><span class="text-muted"><i class="fa fa-clock-o"></i> ${{ rs.current_price }}</span> </td>
+						  <td>{{ rs.market_cap}}</td>
+						  <td>{{ rs.market_cap_rank}}</td>
+						  {% endfor %}
+						</tr>
+							{% for rs in zoom %}
+						  <td><img width="20px" height="20px" src="{{ rs.image }}"><a href="{% url 'main:zoom_swap' %}"> {{ rs.name }} ({{ rs.symbol}})</a></td>
+						  <td>{{ rs.total_supply }}</td>
+						  <td><span class="text-muted"><i class="fa fa-clock-o"></i> ${{ rs.current_price }}</span> </td>
+						   <td>{{ rs.market_cap}}</td>
+						  <td>{{ rs.market_cap_rank}}</td>
+						  {% endfor %}
+						</tr>
+						<tr>
+							{% for rs in vita %}
+						  <td><img width="20px" height="20px" src="{{ rs.image }}"><a href="{% url 'main:vitality' %}"> {{ rs.name }} ({{ rs.symbol}})</a></td>
+						  <td>{{ rs.total_supply }} </td>
+						  <td><span class="text-muted"><i class="fa fa-clock-o"></i> ${{ rs.current_price }}</span> </td>
+						   <td>{{ rs.market_cap}}</td>
+						  <td>{{ rs.market_cap_rank}}</td>
+						  {% endfor %}
+						  
+						</tr>
+						<tr>
+							{% for rs in wow %}
+						  <td><img width="20px" height="20px" src="{{ rs.image }}"><a href="{% url 'main:wow' %}"> {{ rs.name }} ({{ rs.symbol}})</a></td>
+						  <td>{{ rs.total_supply }} </td>
+						  <td><span class="text-muted"><i class="fa fa-clock-o"></i> ${{ rs.current_price }}</span> </td>
+						   <td>{{ rs.market_cap}}</td>
+						  <td>{{ rs.market_cap_rank}}</td>
+						  {% endfor %}
+						  
+						</tr>
+						<tr>
+							{% for rs in data %}
+						  <td><img width="20px" height="20px" src="{{ rs.image }}"><a href="{% url 'main:game_fantasy_token' %}"> {{ rs.name }} ({{ rs.symbol}})</a></td>
+						  <td>{{ rs.total_supply }}</td>
+						  <td><span class="text-muted"><i class="fa fa-clock-o"></i> ${{ rs.current_price }}</span> </td>
+						   <td>{{ rs.market_cap}}</td>
+						  <td>{{ rs.market_cap_rank}}</td>
+						  {% endfor %}
+						</tr>
+						<tr>
+								{% for rs in metanyx %}
+						  <td><img width="20px" height="20px" src="{{ rs.image }}"><a href="{% url 'main:metanyx' %}"> {{ rs.name }} ({{ rs.symbol}})</a></td>
+						  <td>{{ rs.total_supply }}</td>
+						  <td><span class="text-muted"><i class="fa fa-clock-o"></i> ${{ rs.current_price }}</span> </td>
+						   <td>{{ rs.market_cap}}</td>
+						  <td>{{ rs.market_cap_rank}}</td>
+						  {% endfor %}
+						</tr>
+
+						<tr>
+								{% for rs in iotexshiba %}
+						  <td><img width="20px" height="20px" src="{{ rs.image }}"><a href="{% url 'main:iotex_shiba' %}"> {{ rs.name }} ({{ rs.symbol}})</a></td>
+						  <td>{{ rs.total_supply }}</td>
+						  <td><span class="text-muted"><i class="fa fa-clock-o"></i> ${{ rs.current_price }}</span> </td>
+						   <td>{{ rs.market_cap}}</td>
+						  <td>{{ rs.market_cap_rank}}</td>
+						  {% endfor %}
+						</tr>
+
+						<tr>
+								{% for rs in imagictoken %}
+						  <td><img width="20px" height="20px" src="{{ rs.image }}"><a href="{% url 'main:imagictoken' %}"> {{ rs.name }} ({{ rs.symbol}})</a></td>
+						  <td>{{ rs.total_supply }}</td>
+						  <td><span class="text-muted"><i class="fa fa-clock-o"></i> ${{ rs.current_price }}</span> </td>
+						   <td>{{ rs.market_cap}}</td>
+						  <td>{{ rs.market_cap_rank}}</td>
+						  {% endfor %}
+						</tr>
+						
+					  </table>
+					</div>
+				</div>
+				<!-- /.box-body -->
+			  </div>
+			  <!-- /.box -->
+			</div>
+		</div>
+	</div>
+
+
+
+		</section>
+		<!-- /.content -->
+	  </div>
+  </div>
+  <!-- /.content-wrapper -->
+
+
+{% endblock %}
