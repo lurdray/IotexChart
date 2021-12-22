@@ -33,3 +33,16 @@ class Banner(models.Model):
 
     def __str__(self):
         return self.title
+
+
+
+
+
+class IotexChart(models.Model):
+    price = models.CharField(max_length=200)
+
+    pub_date = models.DateTimeField(default=timezone.now)
+    status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.price

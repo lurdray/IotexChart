@@ -184,7 +184,7 @@
 								{% for rs in iotexshiba %}
 						  <td><img width="20px" height="20px" src="{{ rs.image }}"><a href="{% url 'main:iotex_shiba' %}"> {{ rs.name }} ({{ rs.symbol}})</a></td>
 						  <td>{{ rs.total_supply }}</td>
-						  <td><span class="text-muted"><i class="fa fa-clock-o"></i> ${{ rs.current_price }}</span> </td>
+						  <td><span class="text-muted"><i class="fa fa-clock-o"></i> ${{ rs.current_price|floatformat:11 }}</span> </td>
 						   <td>{{ rs.market_cap}}</td>
 						  <td>{{ rs.market_cap_rank}}</td>
 						  {% endfor %}

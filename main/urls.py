@@ -21,6 +21,7 @@ urlpatterns = [
 
 
 	#coin urls 
+	path("iotex-chart/", views.IotexChartView, name="iotex_chart"),
 	path("imagictoken/", views.ImagicTokenView, name="imagictoken"),
 	path("metanyx/", views.MetanyxView, name="metanyx"),
 	path("iotex-shiba/", views.IotexShibaView, name="iotex_shiba"),

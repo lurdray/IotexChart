@@ -27,6 +27,26 @@ import json
 import time
 from datetime import datetime, timedelta
 
+#from bs4 import BeautifulSoup
+
+#import pandas as pd
+
+
+#url = 'https://iotexscan.io/token/0xe2F300065C1ebfc2BE8574da8063dd0721C85A33'
+#header = {
+#  "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.75 Safari/537.36",
+#  "X-Requested-With": "XMLHttpRequest"
+#}
+
+#r = requests.get(url, headers=header)
+
+#data = pd.read_html(r.text)
+#print(data)
+
+#data = requests.get("https://v2.info.mimo.exchange/token/0xe2F300065C1ebfc2BE8574da8063dd0721C85A33")
+#soup = BeautifulSoup(data.content, 'html5lib')
+#print(soup.prettify())
+#print("####################################################")
 
 def NoneView(request):
 	if request.method == "POST":
@@ -36,8 +56,8 @@ def NoneView(request):
 
 		banner = Banner.objects.all().order_by('-pub_date')[:4]
 		
-		side_banner = Banner.objects.all().order_by('-pub_date')[5:7]
-		aside_banner = Banner.objects.all().order_by('-pub_date')[8:10]
+		#side_banner = Banner.objects.all().order_by('-pub_date')[1:3]
+		aside_banner = Banner.objects.all().order_by('-pub_date')[1:3]
 		data = requests.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=game-fantasy-token&order=market_cap_desc&per_page=100&page=1&sparkline=true&price_change_percentage=1h").json()
 		vita = requests.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=vitality&order=market_cap_desc&per_page=100&page=1&sparkline=true&price_change_percentage=1h").json()
 		zoom = requests.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=zoomswap&order=market_cap_desc&per_page=100&page=1&sparkline=true&price_change_percentage=1h").json()
@@ -47,10 +67,23 @@ def NoneView(request):
 		imagictoken = requests.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=imagictoken&order=market_cap_desc&per_page=100&page=1&sparkline=true&price_change_percentage=1h").json()
 		wow = requests.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=wowswap&order=market_cap_desc&per_page=100&page=1&sparkline=true&price_change_percentage=1h").json()
 		
-
-		context = {"banner": banner, "side_banner":side_banner, "aside_banner":aside_banner, "data":data, "vita":vita, "zoom":zoom, "iotex":iotex, "metanyx":metanyx, "iotexshiba":iotexshiba, "imagictoken":imagictoken, "wow":wow}
+		context = {"banner": banner,  "aside_banner":aside_banner, "data":data, "vita":vita, "zoom":zoom, "iotex":iotex, "metanyx":metanyx, "iotexshiba":iotexshiba, "imagictoken":imagictoken, "wow":wow}
+		
+		time.sleep(6)
 		return render(request, "main/none.html", context)
 
+
+
+def IotexChartView(request):
+	if request.method == "POST":
+		pass
+	else:
+		data = IotexChart.objects.order_by("-pub_date")
+
+		context = {"data":data}
+
+		time.sleep(6)
+		return render(request, "main/iotexchart.html", context)
 
 
 
@@ -67,6 +100,8 @@ def WowSwapView(request):
 		hr_chg = str(response["wowswap"]["usd_24h_change"])
 		last_updated = str(response["wowswap"]["last_updated_at"])
 		context = {"data":data, "price":price, "market_cap":market_cap, "hr_vol":hr_vol, "hr_chg":hr_chg, "last_updated":last_updated, "image":image}
+		
+		time.sleep(6)
 		return render(request, "main/wow.html", context)
 
 
@@ -83,6 +118,8 @@ def ImagicTokenView(request):
 		hr_chg = str(response["imagictoken"]["usd_24h_change"])
 		last_updated = str(response["imagictoken"]["last_updated_at"])
 		context = {"data":data, "price":price, "market_cap":market_cap, "hr_vol":hr_vol, "hr_chg":hr_chg, "last_updated":last_updated, "image":image}
+		
+		time.sleep(6)
 		return render(request, "main/imagictoken.html", context)
 
 
@@ -99,6 +136,8 @@ def IotexShibaView(request):
 		hr_chg = str(response["iotexshiba"]["usd_24h_change"])
 		last_updated = str(response["iotexshiba"]["last_updated_at"])
 		context = {"data":data, "price":price, "market_cap":market_cap, "hr_vol":hr_vol, "hr_chg":hr_chg, "last_updated":last_updated, "image":image}
+		
+		time.sleep(6)
 		return render(request, "main/iotexshiba.html", context)
 
 
@@ -115,6 +154,8 @@ def MetanyxView(request):
 		hr_chg = str(response["metanyx"]["usd_24h_change"])
 		last_updated = str(response["metanyx"]["last_updated_at"])
 		context = {"data":data, "price":price, "market_cap":market_cap, "hr_vol":hr_vol, "hr_chg":hr_chg, "last_updated":last_updated, "image":image}
+		
+		time.sleep(6)
 		return render(request, "main/metanyx.html", context)
 
 def IotexView(request):
@@ -130,6 +171,8 @@ def IotexView(request):
 		hr_chg = str(response["iotex"]["usd_24h_change"])
 		last_updated = str(response["iotex"]["last_updated_at"])
 		context = {"image":image, "data":data, "price":price, "market_cap":market_cap, "hr_vol":hr_vol, "hr_chg":hr_chg, "last_updated":last_updated}
+		
+		time.sleep(6)
 		return render(request, "main/iotex.html", context)
 
 
@@ -147,6 +190,8 @@ def ZoomSwapView(request):
 		hr_chg = str(response["zoomswap"]["usd_24h_change"])
 		last_updated = str(response["zoomswap"]["last_updated_at"])
 		context = {"data":data, "price":price, "market_cap":market_cap, "hr_vol":hr_vol, "hr_chg":hr_chg, "last_updated":last_updated, "image":image}
+		
+		time.sleep(6)
 		return render(request, "main/zoomswap.html", context)
 
 def GameFantasyTokenView(request):
@@ -163,6 +208,8 @@ def GameFantasyTokenView(request):
 		last_updated = str(response["game-fantasy-token"]["last_updated_at"])
 		
 		context = {"image":image, "data":data, "price":price, "market_cap":market_cap, "hr_vol":hr_vol, "hr_chg":hr_chg, "last_updated":last_updated}
+		
+		time.sleep(6)
 		return render(request, "main/gamefantasy.html", context)
 
 def VitalityView(request):
@@ -178,6 +225,8 @@ def VitalityView(request):
 		hr_chg = str(response["vitality"]["usd_24h_change"])
 		last_updated = str(response["vitality"]["last_updated_at"])
 		context = {"image":image, "data":data, "price":price, "market_cap":market_cap, "hr_vol":hr_vol, "hr_chg":hr_chg, "last_updated":last_updated}
+		
+		time.sleep(6)
 		return render(request, "main/vitality.html", context)
 
 
@@ -275,7 +324,7 @@ def IndexView(request):
 
 				url = GetUrlViaName(result)
 
-
+		time.sleep(6)
 		return HttpResponseRedirect(reverse("main:%s" % (url)))
 
 
@@ -284,8 +333,8 @@ def IndexView(request):
 	else:
 		banner = Banner.objects.all().order_by('-pub_date')[:4]
 		
-		side_banner = Banner.objects.all().order_by('-pub_date')[5:7]
-		aside_banner = Banner.objects.all().order_by('-pub_date')[8:10]
+		side_banner = Banner.objects.all().order_by('-pub_date')[1:3]
+		aside_banner = Banner.objects.all().order_by('-pub_date')[1:3]
 		data = requests.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=game-fantasy-token&order=market_cap_desc&per_page=100&page=1&sparkline=true&price_change_percentage=1h").json()
 		vita = requests.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=vitality&order=market_cap_desc&per_page=100&page=1&sparkline=true&price_change_percentage=1h").json()
 		zoom = requests.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=zoomswap&order=market_cap_desc&per_page=100&page=1&sparkline=true&price_change_percentage=1h").json()
@@ -295,7 +344,7 @@ def IndexView(request):
 		imagictoken = requests.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=imagictoken&order=market_cap_desc&per_page=100&page=1&sparkline=true&price_change_percentage=1h").json()
 		wow = requests.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=wowswap&order=market_cap_desc&per_page=100&page=1&sparkline=true&price_change_percentage=1h").json()
 		
-
+		time.sleep(6)
 		context = {"banner": banner, "side_banner":side_banner, "aside_banner":aside_banner, "data":data, "vita":vita, "zoom":zoom, "iotex":iotex, "metanyx":metanyx, "iotexshiba":iotexshiba, "imagictoken":imagictoken, "wow":wow}
 		return render(request, "main/index.html", context )
 
@@ -316,7 +365,7 @@ def AllBannerView(request):
 		"banner": banner,
 		#"response":response,
 
-        }
+		}
 
 	return render(request, "main/allbanner.html", context )
 
@@ -324,8 +373,8 @@ def AllBannerView(request):
 def VerifyBannerView(request, pk):
 	banner = Banner.objects.get(id=pk)
 	context = {
-        "banner":banner
-    	}
+		"banner":banner
+	}
 	#form = VerifyBannerForm(request.POST or None)
 	if request.method == "POST":
 		banner = Banner.objects.get(id=pk)
@@ -411,7 +460,7 @@ def AllVettedView(request):
 
 	context = {	
 		"vetted": vetted,
-        }
+		}
 
 	return render(request, "main/allvetted.html", context )
 
@@ -422,9 +471,9 @@ def VerifyVettedView(request, pk):
 		
 
 	context = {
-        "vetted":vetted, 
-        
-    	}
+		"vetted":vetted, 
+
+		}
 	if request.method == "POST":
 		vetted = Unvetted.objects.get(id=pk)
 		vetted.status = True
@@ -439,57 +488,58 @@ def VerifyVettedView(request, pk):
 
 
 def signin(request):
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            messages.success(request, "welcome onboard "+user.username)
-            current_user = request.user
-            #userprofile = UserProfile.objects.get(user_id = current_user.id)
-            #request.session['userimage'] = userprofile.image.url
-            return HttpResponseRedirect('/')
-        else:
-            messages.warning(request, "Login Error !! username or password is incorrect")
-            return HttpResponseRedirect('/signin')
-    current_user = request.user
-    
-    context = {
-    }
-    return render(request, 'main/signin.html', context)
+	if request.method == 'POST':
+		username = request.POST['username']
+		password = request.POST['password']
+		user = authenticate(request, username=username, password=password)
+		if user is not None:
+			login(request, user)
+			messages.success(request, "welcome onboard "+user.username)
+			current_user = request.user
+			#userprofile = UserProfile.objects.get(user_id = current_user.id)
+			#request.session['userimage'] = userprofile.image.url
+			return HttpResponseRedirect('/')
+		else:
+			messages.warning(request, "Login Error !! username or password is incorrect")
+			return HttpResponseRedirect('/signin')
+	current_user = request.user
+
+	context = {
+	}
+	return render(request, 'main/signin.html', context)
 
 
 def signup(request):
-    if request.method == 'POST':
-        form = SignUpForm(request.POST)
-        if form.is_valid():
-            form.save()
-            
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password1')
-            email = form.cleaned_data.get('email')
-            phone = form.cleaned_data.get('phone')
-            user = authenticate(username=username, password=password)
-            login(request, user)
-            current_user = request.user
-            #data = UserProfile()
-            data.user_id = current_user.id
+	if request.method == 'POST':
+		form = SignUpForm(request.POST)
+		if form.is_valid():
+			form.save()
 
-            data.image="images.png"
-            data.save()
-            messages.success(request, 'Account successfully created')
-            return HttpResponseRedirect('/')
-        else:
-            messages.warning(request, form.errors)
-            return HttpResponseRedirect('/signup')
-    form = SignUpForm()
+			username = form.cleaned_data.get('username')
+			password = form.cleaned_data.get('password1')
+			email = form.cleaned_data.get('email')
+			phone = form.cleaned_data.get('phone')
+			user = authenticate(username=username, password=password)
+			
+			login(request, user)
+			current_user = request.user
+			#data = UserProfile()
+			data.user_id = current_user.id
+			
+			data.image="images.png"
+			data.save()
+			messages.success(request, 'Account successfully created')
+			return HttpResponseRedirect('/')
+		else:
+			messages.warning(request, form.errors)
+			return HttpResponseRedirect('/signup')
+	form = SignUpForm()
 
-    context = {'form':form,  }
-    return render(request, 'main/signup.html', context)
+	context = {'form':form,  }
+	return render(request, 'main/signup.html', context)
 
 def logout_func(request):
-    logout(request)
-    messages.success(request, 'Logged out')
-    return HttpResponseRedirect('/')
+	logout(request)
+	messages.success(request, 'Logged out')
+	return HttpResponseRedirect('/')
 	
