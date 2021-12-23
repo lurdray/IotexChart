@@ -1,199 +1,51 @@
-
-
-
-
-
-
-
-
-
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Static Chart</title>
+<html>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<body>
 
-    <style type="text/css">
-.switcher {
-	display: flex;
-	align-items: center;
-	height: 30px;
-	margin-top: 8px;
-	color: #2196F3;
-}
+  <div class="row">
+    <div class="col-lg-6 col-md-6 col-sm-6">
+      <div id="myChart" style="width:100%; max-width:600px; height:500px;"></div>
 
-.switcher-item {
-	cursor: pointer;
-	text-decoration: none;
-	display: inline-block;
-	padding: 6px 8px;
-	font-size: 14px;
-	color: #262b3e;
-	background-color: transparent;
-	margin-right: 8px;
-	border: none;
-	border-radius: 4px;
-	outline: none;
-}
+    </div>
 
-.switcher-item:hover {
-	background-color: #f2f3f5;
-}
+    <div class="col-lg-6 col-md-6 col-sm-6">
+      <p>Current Price: {{ price }}</p>
+      <p>ATH: {{ ath }}</p>
+      <p>ATL: {{ atl }}</p>
 
-.switcher-active-item {
-	text-decoration: none;
-	cursor: default;
-	color: #262b3e;
-}
+    </div>
+    
+  </div>
 
-.switcher-active-item,
-.switcher-active-item:hover {
-	background-color: #e1eff9;
-}
+<script>
+google.charts.load('current',{packages:['corechart']});
+google.charts.setOnLoadCallback(drawChart);
 
-</style>
-  </head>
-  <body>
-    <h2>Binance BTCUSDT Chart</h2>
-    <div id="tvchart"></div>
-  </body>
-  <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
-  
-
-  <script type="text/javascript">
-function createSimpleSwitcher(items, activeItem, activeItemChangedCallback) {
-	var switcherElement = document.createElement('div');
-	switcherElement.classList.add('switcher');
-
-	var intervalElements = items.map(function(item) {
-		var itemEl = document.createElement('button');
-		itemEl.innerText = item;
-		itemEl.classList.add('switcher-item');
-		itemEl.classList.toggle('switcher-active-item', item === activeItem);
-		itemEl.addEventListener('click', function() {
-			onItemClicked(item);
-		});
-		switcherElement.appendChild(itemEl);
-		return itemEl;
-	});
-
-	function onItemClicked(item) {
-		if (item === activeItem) {
-			return;
-		}
-
-		intervalElements.forEach(function(element, index) {
-			element.classList.toggle('switcher-active-item', items[index] === item);
-		});
-
-		activeItem = item;
-
-		activeItemChangedCallback(item);
-	}
-
-	return switcherElement;
-}
-
-var switcherElement = createSimpleSwitcher(['Dark', 'Light'], 'Dark', syncToTheme);
-
-var chartElement = document.createElement('div');
-
-var chart = LightweightCharts.createChart(chartElement, {
-	width: 600,
-  height: 300,
-	rightPriceScale: {
-		borderVisible: false,
-	},
-	timeScale: {
-		borderVisible: false,
-	},
-});
-
-document.body.appendChild(chartElement);
-document.body.appendChild(switcherElement);
-
-var areaSeries = chart.addAreaSeries({
-  topColor: 'rgba(33, 150, 243, 0.56)',
-  bottomColor: 'rgba(33, 150, 243, 0.04)',
-  lineColor: 'rgba(33, 150, 243, 1)',
-  lineWidth: 2,
-});
-
-var darkTheme = {
-	chart: {
-		layout: {
-			backgroundColor: '#2B2B43',
-			lineColor: '#2B2B43',
-			textColor: '#D9D9D9',
-		},
-		watermark: {
-			color: 'rgba(0, 0, 0, 0)',
-		},
-		crosshair: {
-			color: '#758696',
-		},
-		grid: {
-			vertLines: {
-				color: '#2B2B43',
-			},
-			horzLines: {
-				color: '#363C4E',
-			},
-		},
-	},
-	series: {
-			topColor: 'rgba(32, 226, 47, 0.56)',
-			bottomColor: 'rgba(32, 226, 47, 0.04)',
-			lineColor: 'rgba(32, 226, 47, 1)',
-	},
-};
-  
-const lightTheme = {
-	chart: {
-		layout: {
-			backgroundColor: '#FFFFFF',
-			lineColor: '#2B2B43',
-			textColor: '#191919',
-		},
-		watermark: {
-			color: 'rgba(0, 0, 0, 0)',
-		},
-		grid: {
-			vertLines: {
-				visible: false,
-			},
-			horzLines: {
-				color: '#f0f3fa',
-			},
-		},
-	},
-	series: {
-			topColor: 'rgba(33, 150, 243, 0.56)',
-			bottomColor: 'rgba(33, 150, 243, 0.04)',
-			lineColor: 'rgba(33, 150, 243, 1)',
-	},
-};
-
-var themesData = {
-	Dark: darkTheme,
-	Light: lightTheme,
-};
-
-function syncToTheme(theme) {
-	chart.applyOptions(themesData[theme].chart);
-	areaSeries.applyOptions(themesData[theme].series);
-}
-
-areaSeries.setData([
-
-	{% for item in data %}
-		{ time: '{{ item.pub_date.isoformat.0 }}{{ item.pub_date.isoformat.1 }}{{ item.pub_date.isoformat.2 }}{{ item.pub_date.isoformat.3 }}{{ item.pub_date.isoformat.4 }}{{ item.pub_date.isoformat.5 }}{{ item.pub_date.isoformat.6 }}{{ item.pub_date.isoformat.7 }}{{ item.pub_date.isoformat.8 }}{{ item.pub_date.isoformat.9 }}', value: {{ item.price }} },
-	{% endfor %}
-
+function drawChart() {
+// Set Data
+var data = google.visualization.arrayToDataTable([
+  ['Date', 'Price'],
+  {% for item in data %}
+      ["{{ item.pub_date|date:"M d, Y" }}",{{ item.price }}],
+  {% endfor %}
 
 ]);
-syncToTheme('Dark');
-
+// Set Options
+var options = {
+  title: 'IotexChart Price Data',
+  hAxis: {title: 'Dates'},
+  vAxis: {title: 'Price'},
+  legend: 'none'
+};
+// Draw
+var chart = new google.visualization.LineChart(document.getElementById('myChart'));
+chart.draw(data, options);
+}
 </script>
 
+</body>
 </html>
+
+
+

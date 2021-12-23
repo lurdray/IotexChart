@@ -27,26 +27,24 @@ import json
 import time
 from datetime import datetime, timedelta
 
-#from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup
+from selenium import webdriver
 
-#import pandas as pd
 
-
-#url = 'https://iotexscan.io/token/0xe2F300065C1ebfc2BE8574da8063dd0721C85A33'
-#header = {
-#  "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.75 Safari/537.36",
-#  "X-Requested-With": "XMLHttpRequest"
-#}
-
-#r = requests.get(url, headers=header)
-
-#data = pd.read_html(r.text)
-#print(data)
-
-#data = requests.get("https://v2.info.mimo.exchange/token/0xe2F300065C1ebfc2BE8574da8063dd0721C85A33")
+#data = requests.get("https://iotexscan.io/token/0xe2F300065C1ebfc2BE8574da8063dd0721C85A33")
 #soup = BeautifulSoup(data.content, 'html5lib')
-#print(soup.prettify())
-#print("####################################################")
+
+#driver = webdriver.Chrome(executable_path="/usr/local/bin/chromedriver") 
+#driver.get("https://iotexscan.io/token/0xe2F300065C1ebfc2BE8574da8063dd0721C85A33")
+
+#html = driver.execute_script("return document.documentElement.innerHTML")
+#new_soup = BeautifulSoup(html, "html.parser")
+
+#data = new_soup.find_all('p', class_='chakra-text')
+#price = data[0].get_text()
+
+#print(data)
+print("####################################################")
 
 def NoneView(request):
 	if request.method == "POST":
@@ -78,11 +76,17 @@ def IotexChartView(request):
 	if request.method == "POST":
 		pass
 	else:
-		data = IotexChart.objects.order_by("-pub_date")
+		data = IotexChart.objects.order_by("pub_date")
 
-		context = {"data":data}
+		prices = [item.price for item in data]
 
-		time.sleep(6)
+		ath = max(prices)
+		atl = min(prices)
+		price = prices[-1]
+
+		context = {"data":data, "ath": ath, "atl": atl,"price": price}
+
+		#time.sleep(6)
 		return render(request, "main/iotexchart.html", context)
 
 
