@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.shortcuts import (HttpResponse, HttpResponseRedirect,
                               get_object_or_404, redirect, render)
 from django.utils import timezone
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
@@ -46,6 +46,38 @@ from selenium import webdriver
 #print(data)
 print("####################################################")
 
+
+
+def GetIotexJson(request):
+
+	#(datetime(item.pub_date.timetuple().tm_year, item.pub_date.timetuple().tm_mon, item.pub_date.timetuple().tm_mday) - datetime(1970, 1, 1)).total_seconds()
+	data = IotexChart.objects.order_by("pub_date")
+	result = []
+	for item in data:
+		new_list = []
+		new_list.append((datetime(item.pub_date.timetuple().tm_year, item.pub_date.timetuple().tm_mon, item.pub_date.timetuple().tm_mday) - datetime(1970, 1, 1)).total_seconds()*1000)
+		new_list.append(float(item.price))
+		result.append(new_list)
+
+	#return result
+
+	return JsonResponse(json.dumps(result), safe=False)
+
+
+def GetIotexJson2(request):
+
+	#(datetime(item.pub_date.timetuple().tm_year, item.pub_date.timetuple().tm_mon, item.pub_date.timetuple().tm_mday) - datetime(1970, 1, 1)).total_seconds()
+	data = IotexChart.objects.order_by("pub_date")
+	result = []
+	for item in data:
+		new_list = []
+		new_list.append((datetime(item.pub_date.timetuple().tm_year, item.pub_date.timetuple().tm_mon, item.pub_date.timetuple().tm_mday) - datetime(1970, 1, 1)).total_seconds()*1000)
+		new_list.append(float(item.price))
+		result.append(new_list)
+
+	return result
+
+
 def NoneView(request):
 	if request.method == "POST":
 		pass
@@ -84,7 +116,11 @@ def IotexChartView(request):
 		atl = min(prices)
 		price = prices[-1]
 
-		context = {"data":data, "ath": ath, "atl": atl,"price": price}
+		response = GetIotexJson2(request)
+
+		#return HttpResponse(str(response))
+
+		context = {"response": response, "data":data, "ath": ath, "atl": atl,"price": price}
 
 		#time.sleep(6)
 		return render(request, "main/iotexchart.html", context)

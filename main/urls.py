@@ -21,6 +21,7 @@ urlpatterns = [
 
 
 	#coin urls 
+	path("api/get-iotex-chart/", views.GetIotexJson, name="get_iotex_json"),
 	path("iotex-chart/", views.IotexChartView, name="iotex_chart"),
 	path("imagictoken/", views.ImagicTokenView, name="imagictoken"),
 	path("metanyx/", views.MetanyxView, name="metanyx"),
