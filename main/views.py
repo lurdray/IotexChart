@@ -10,9 +10,6 @@ from .forms import *
 from .models import *
 from django.contrib.auth.decorators import login_required
 
-
-
-
 from django.core.mail import send_mail
 
 from datetime import datetime
@@ -27,24 +24,52 @@ import json
 import time
 from datetime import datetime, timedelta
 
+from helium import *
 from bs4 import BeautifulSoup
+
 from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.options import Options
+
+from threading import Timer
+
+def UpdateIotexData(request):
+	options = webdriver.ChromeOptions()
+	options.add_experimental_option("excludeSwitches",["ignore-certificate-errors"])
+	options.add_argument('--disable-gpu')
+	options.add_argument('--headless')
+	chrome_driver_path = "/usr/local/bin/chromedriver"
+
+	driver = webdriver.Chrome(executable_path="/usr/local/bin/chromedriver", chrome_options=options)
+	driver.get("https://iotexscan.io/token/io1utesqpjur6lu9059wndgqc7aqususk3n68709k?format=io")
+
+	html = driver.execute_script("return document.documentElement.innerHTML;")
+	new_soup = BeautifulSoup(html, "html.parser")
+
+	ps = new_soup.find_all("p", {"class": "chakra-text css-1104t03"})
+
+	price = ps[0].get_text()
+	market_cap = ps[1].get_text()
+	addresses = ps[2].get_text()
+
+	if price != "-":
+		data = IotexChartData.objects.create(current_price=price, market_cap=market_cap, addresses=addresses)
+		data.save()
+
+		price = price.replace("$", "")
+		data2 = IotexChart.objects.create(price=price)
+		data2.save()
+
+		print("trueeee")
 
 
-#data = requests.get("https://iotexscan.io/token/0xe2F300065C1ebfc2BE8574da8063dd0721C85A33")
-#soup = BeautifulSoup(data.content, 'html5lib')
+	print(price)
+	print("##############UpdateIotexData func completed!######################")
+	Timer(5, UpdateIotexData(requests)).start()
 
-#driver = webdriver.Chrome(executable_path="/usr/local/bin/chromedriver") 
-#driver.get("https://iotexscan.io/token/0xe2F300065C1ebfc2BE8574da8063dd0721C85A33")
-
-#html = driver.execute_script("return document.documentElement.innerHTML")
-#new_soup = BeautifulSoup(html, "html.parser")
-
-#data = new_soup.find_all('p', class_='chakra-text')
-#price = data[0].get_text()
-
-#print(data)
-print("####################################################")
+#UpdateIotexData(requests)
 
 
 
@@ -71,7 +96,7 @@ def GetIotexJson2(request):
 	result = []
 	for item in data:
 		new_list = []
-		new_list.append((datetime(item.pub_date.timetuple().tm_year, item.pub_date.timetuple().tm_mon, item.pub_date.timetuple().tm_mday) - datetime(1970, 1, 1)).total_seconds()*1000)
+		new_list.append((datetime(item.pub_date.timetuple().tm_year, item.pub_date.timetuple().tm_mon, item.pub_date.timetuple().tm_mday, item.pub_date.timetuple().tm_hour, item.pub_date.timetuple().tm_min, item.pub_date.timetuple().tm_sec) - datetime(1970, 1, 1)).total_seconds()*1000)
 		new_list.append(float(item.price))
 		result.append(new_list)
 
@@ -118,7 +143,6 @@ def IotexChartView(request):
 
 		response = GetIotexJson2(request)
 
-		#return HttpResponse(str(response))
 
 		context = {"response": response, "data":data, "ath": ath, "atl": atl,"price": price}
 

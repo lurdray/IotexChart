@@ -5,5 +5,6 @@ from .models import *
 admin.site.register(Unvetted)
 admin.site.register(Banner)
 admin.site.register(IotexChart)
+admin.site.register(IotexChartData)
 
 

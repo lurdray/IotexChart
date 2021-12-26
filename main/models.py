@@ -36,10 +36,21 @@ class Banner(models.Model):
 
 
 
+class IotexChartData(models.Model):
+    current_price = models.CharField(max_length=200, default="")
+    market_cap = models.CharField(max_length=200, default="")
+    addresses = models.CharField(max_length=200, default="")
+
+    pub_date = models.DateTimeField(default=timezone.now)
+    status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.current_price
+
 
 
 class IotexChart(models.Model):
-    price = models.CharField(max_length=200)
+    price = models.CharField(max_length=200, default="")
 
     pub_date = models.DateTimeField(default=timezone.now)
     status = models.BooleanField(default=False)
